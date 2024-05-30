@@ -1,23 +1,31 @@
-import logo from './logo.svg';
 import './App.css';
+import React, { useEffect, useState } from 'react';
+import { EVENTS } from './consts';
+import { HomePage } from './pages/Home.jsx';
+import { AboutPage } from './pages/About.jsx';
+
 
 function App() {
+  const [currentPath, setCurrentPath] = useState(window.location.pathname);
+  //Con estoe scuchamos cuando cambai la url
+  useEffect(() => {
+    const onLocationChange = () => {
+      setCurrentPath(window.location.pathname);
+    }
+    window.addEventListener(EVENTS.PUSHSTATE, onLocationChange);
+    window.addEventListener(EVENTS.POPSTATE, onLocationChange);
+    return () => {
+      window.removeEventListener(EVENTS.PUSHSTATE, onLocationChange);
+      window.removeEventListener(EVENTS.POPSTATE, onLocationChange);
+    }
+  }, [])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <main>
+        {currentPath === '/' && <HomePage />}
+        {currentPath === '/about' && <AboutPage />}
+      </main>
     </div>
   );
 }
