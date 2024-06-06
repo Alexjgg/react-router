@@ -1,8 +1,8 @@
 import './App.css';
 import React, { useEffect, useState } from 'react';
 import { EVENTS } from './consts';
-import { HomePage } from './pages/Home.jsx';
-import { AboutPage } from './pages/About.jsx';
+import HomePage from './pages/Home.jsx';  // Importación por defecto
+import AboutPage from './pages/About.jsx';
 
 
 function App() {
