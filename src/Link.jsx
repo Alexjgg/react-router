@@ -10,7 +10,6 @@ export function navigate(href) {
 export function Link ({target,to, ...props}){
   const handleClike = (event)=>{
     //evita el comportamiento por defecto del link
-    ;
 
     const isMainEvent = event.button=== 0 //boton principal
     //comprobar si el evento esta modificado
@@ -19,11 +18,11 @@ export function Link ({target,to, ...props}){
     const isManageableEvent = target === undefined || target==='_self';
     
     if(isMainEvent && isManageableEvent && !isModifiedEvent){
-      event.preventDefault()
+      event.preventDefault();
       navigate(to);
     }
     
 
   }
-return <a onClick={handleClike} href={to} target={target} {...props}></a>
+return <a onClick={handleClike} href={to} target={target} {...props}></a>;
 }

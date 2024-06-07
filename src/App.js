@@ -1,30 +1,37 @@
 import './App.css';
-import React, { useEffect, useState } from 'react';
-import { EVENTS } from './consts';
+import { lazy, Suspense } from 'react';
+import { Router } from './Router.jsx';
+import notfindPage from './pages/404';  // Importación por defecto
 import HomePage from './pages/Home.jsx';  // Importación por defecto
-import AboutPage from './pages/About.jsx';
+import dinamicPage from './pages/dinamic.jsx';
+const LazyAboutPage = lazy(() => import('./pages/About.jsx'));
+
+const routes = [
+  {
+    path: '/',
+    Component: HomePage,
+  }, {
+    path: '/about',
+    Component: LazyAboutPage,
+  }, {
+    path: '/search/:query',
+    Component: dinamicPage,
+  }
+];
+
+//componente router
+
 
 
 function App() {
-  const [currentPath, setCurrentPath] = useState(window.location.pathname);
-  //Con estoe scuchamos cuando cambai la url
-  useEffect(() => {
-    const onLocationChange = () => {
-      setCurrentPath(window.location.pathname);
-    }
-    window.addEventListener(EVENTS.PUSHSTATE, onLocationChange);
-    window.addEventListener(EVENTS.POPSTATE, onLocationChange);
-    return () => {
-      window.removeEventListener(EVENTS.PUSHSTATE, onLocationChange);
-      window.removeEventListener(EVENTS.POPSTATE, onLocationChange);
-    }
-  }, [])
+
 
   return (
     <div className="App">
       <main>
-        {currentPath === '/' && <HomePage />}
-        {currentPath === '/about' && <AboutPage />}
+        <Suspense fallback={() => { return <p>Cargando</p> }}>
+          <Router routes={routes} defaultComponent={notfindPage}></Router>
+        </Suspense>
       </main>
     </div>
   );

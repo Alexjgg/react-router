@@ -5,7 +5,7 @@ function AboutPage() {
     <>
       <h1>Home</h1>
       <p>Esta es suna pagina de about ejemplo para crear un rear roucter desde cero</p>
-      <Link to='/' >Ir a home</Link>
-    </>
+      <Link to='/'class="ejemplo">Ir a home</Link>
+   </>
   )
 }
